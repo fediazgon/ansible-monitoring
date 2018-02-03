@@ -1,0 +1,19 @@
+#
+# {{ ansible_managed }}
+#
+
+[Unit]
+Description=Node Exporter
+Wants=network-online.target
+After=network-online.target
+
+[Service]
+Type=simple
+
+User={{ prometheus_user }}
+Group={{ prometheus_group }}
+
+ExecStart={{ prometheus_node_exporter_subdir}}/node_exporter
+
+[Install]
+WantedBy=multi-user.target

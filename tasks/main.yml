@@ -1,0 +1,37 @@
+---
+#
+# file: tasks/main.yml
+#
+
+- name: create Prometheus group
+  group:
+    name: "{{ prometheus_group }}"
+    state: present
+
+- name: create Prometheus user
+  user:
+    name: "{{ prometheus_user }}"
+    group: "{{ prometheus_group }}"
+    createhome: no
+    shell: /sbin/nologin
+    state: present
+
+- name: create Prometheus installation directory
+  file:
+    path: "{{ prometheus_install_path }}"
+    state: directory
+    owner: "{{ prometheus_user }}"
+    group: "{{ prometheus_group }}"
+    mode: "u=rwx,g=rx,o=rx"
+
+- name: install Prometheus
+  include_tasks: install-prometheus.yml
+  when: "'prometheus' in components"
+
+- name: install node_exporter
+  include_tasks: install-node-exporter.yml
+  when: "'node_exporter' in components"
+
+- name: install Grafana
+  include_tasks: install-grafana.yml
+  when: "'grafana' in components"

@@ -1,0 +1,52 @@
+---
+#
+# file: tasks/install-grafana.yml
+#
+
+- name: ensure Grafana apt key is present
+  apt_key:
+    url: "{{ grafana_apt_key }}"
+    state: present
+  become: yes
+
+- name: ensure Grafana apt repository is present
+  apt_repository:
+    repo: "{{ grafana_apt_repo }}"
+    update_cache: yes
+    state: present
+  become: yes
+
+- name: ensure Grafana is installed
+  apt:
+    name: grafana
+    state: present
+  become: yes
+  tags: apt
+
+- name: copy Grafana main config file
+  template:
+    src: "{{ item }}.j2"
+    dest: "/etc/grafana/{{ item }}"
+    owner: "{{ grafana_user }}"
+    group: "{{ grafana_group }}"
+  with_items:
+    - grafana.ini
+
+- name: ensure Grafana directories ownership and permissions
+  file:
+    path: "{{ item }}"
+    owner: "{{ grafana_user }}"
+    group: "{{ grafana_group }}"
+    mode: "u=rwx,g=rx,o=rx"
+    state: directory
+    recurse: yes
+  become: yes
+  with_items:
+    - "{{ grafana_conf_path }}"
+    - "{{ grafana_data_path}}"
+    - "{{ grafana_log_path }}"
+
+- name: import Grafana datasources and dashboards
+  import_tasks: grafana-imports.yml
+  tags:
+    - grafana_imports

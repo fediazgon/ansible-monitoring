@@ -1,0 +1,22 @@
+---
+#
+# file: tests/monitoring_install.yml
+#
+
+- hosts: master
+  become: True
+  roles:
+    - monitoring
+  vars:
+    components:
+      - prometheus
+      - node_exporter
+      - grafana
+
+- hosts: workers
+  become: True
+  roles:
+    - monitoring
+  vars:
+    components:
+      - node_exporter

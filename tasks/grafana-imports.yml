@@ -1,0 +1,65 @@
+---
+#
+# file: tasks/grafana-imports.yml
+#
+# Use Grafana HTTP API to create main datasource and save dashboards
+# @see http://docs.grafana.org/http_api/
+#
+
+# Service must be running before importing datasource and dashboards via API
+- name: start Grafana systemd service
+  systemd:
+    name: grafana-server
+    state: started
+    no_block: no
+
+- name: check Grafana main datasource
+  uri:
+    url: "http://{{ ansible_nodename }}:{{ grafana_port }}/api/datasources/1"
+    method: GET
+    user: "{{ grafana_admin_user }}"
+    password: "{{ grafana_admin_password }}"
+    force_basic_auth: yes
+    headers:
+      Accept: application/json
+    body_format: json
+  register: datasource_check
+  failed_when: false
+
+- name: add Grafana main datasource
+  uri:
+    url: "http://{{ ansible_nodename }}:{{ grafana_port }}/api/datasources"
+    method: POST
+    user: "{{ grafana_admin_user }}"
+    password: "{{ grafana_admin_password }}"
+    force_basic_auth: yes
+    headers:
+      Accept: application/json
+      Content-Type: application/json
+    body: "{{ lookup('template', 'templates/datasource.json.j2')}}"
+    body_format: json
+    response: 200
+  when:
+    - datasource_check.status != 200
+
+- name: create Grafana dashboards
+  uri:
+    url: "http://{{ ansible_nodename }}:{{ grafana_port }}/api/dashboards/db"
+    method: POST
+    user: "{{ grafana_admin_user }}"
+    password: "{{ grafana_admin_password }}"
+    force_basic_auth: yes
+    headers:
+      Accept: application/json
+      Content-Type: application/json
+    body: "{{ lookup('template', 'templates/dashboards/{{ item }}.json.j2')}}"
+    body_format: json
+    response: 200
+  with_items:
+    - cluster
+    - nodes
+
+- name: stop Grafana systemd service
+  systemd:
+    name: grafana-server
+    state: stopped

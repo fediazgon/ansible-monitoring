@@ -1,0 +1,92 @@
+---
+#
+# file: defaults/main.yml
+#
+
+#########################################
+###### PROMETEHUS AND NODE_EXPORTER #####
+#########################################
+
+prometheus_user: prometheus
+prometheus_group: prometheus
+prometheus_port: 9090
+
+prometheus_version: 2.1.0
+prometheus_node_exporter_version: 0.15.2
+
+prometheus_platform_suffix: linux-armv7
+
+prometheus_install_path: /opt/prometheus
+prometheus_config_path: /etc/prometheus
+prometheus_db_path: /var/lib/prometheus
+
+prometheus_rule_path: "{{ prometheus_config_path }}/rules"
+
+#
+# internal use only
+#
+
+prometheus_subdir: "{{ prometheus_install_path }}/\
+prometheus-{{ prometheus_version }}\
+.{{ prometheus_platform_suffix }}"
+
+prometheus_node_exporter_subdir: "{{ prometheus_install_path }}/\
+node_exporter-{{ prometheus_node_exporter_version }}\
+.{{ prometheus_platform_suffix }}"
+
+prometheus_tarball: "https://github.com/prometheus/prometheus/releases/download/\
+v{{ prometheus_version }}/prometheus-{{ prometheus_version }}\
+.{{ prometheus_platform_suffix }}.tar.gz"
+
+node_exporter_tarball: "https://github.com/prometheus/node_exporter/releases/download/\
+v{{ prometheus_node_exporter_version }}/node_exporter-{{ prometheus_node_exporter_version }}\
+.{{ prometheus_platform_suffix }}.tar.gz"
+
+#########################################
+################ GRAFANA ################
+#########################################
+
+grafana_apt_key: https://bintray.com/user/downloadSubjectPublicKey?username=bintray
+grafana_apt_repo: deb https://dl.bintray.com/fg2it/deb jessie main
+
+grafana_host: "{{ ansible_nodename }}"
+grafana_port: 8787
+
+grafana_user: grafana
+grafana_group: grafana
+
+grafana_app_mode: production
+
+# Files & Paths
+grafana_conf_path: "/etc/grafana"
+grafana_data_path: "/var/lib/grafana"
+grafana_log_path: "/var/log/grafana"
+grafana_plugins_path: "{{ grafana_data_path }}/plugins"
+grafana_dashboards_path: "{{ grafana_data_path }}/dashboards"
+
+# Database
+grafana_database:
+  type: sqlite3
+  host: 127.0.0.1:3306
+  name: grafana
+  user: root
+  password: ""
+  path: grafana.db
+
+# Security
+grafana_admin_user: admin
+grafana_admin_password: admin
+
+# Log
+grafana_log_mode: console file
+grafana_log_level: info
+
+# Datasource
+grafana_datasource_name: Prometheus
+grafana_datasource_type: prometheus
+grafana_datasource_url_protocol: http
+grafana_datasource_url: "{{ ansible_nodename }}:{{ prometheus_port }}"
+grafana_datasource_basicauth: "false"
+grafana_datasource_basicauth_user:
+grafana_datasource_basicauth_password:
+grafana_datasource_default: "true"

@@ -1,0 +1,27 @@
+---
+#
+# file: meta/main.yml
+#
+
+galaxy_info:
+  author: Fernando Diaz
+  description: Ansible role for installing Grafana, Prometheus and node_exporter
+  company: your company (optional)
+
+  license: MIT
+
+  min_ansible_version: 2.4
+
+  platforms:
+  - name: Debian
+    versions:
+    - stretch
+
+  galaxy_tags:
+    - system
+    - monitoring
+    - grafana
+    - prometheus
+    - node_exporter
+
+dependencies: []

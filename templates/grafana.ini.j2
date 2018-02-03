@@ -1,0 +1,82 @@
+#
+# {{ ansible_managed }}
+#
+
+##################### Grafana Configuration Defaults #####################
+
+# possible values : production, development
+app_mode = {{ grafana_app_mode }}
+
+#################################### Paths ###############################
+[paths]
+# Path to where grafana can store temp files, sessions, and the sqlite3 db (if that is used)
+#
+data = {{ grafana_data_path }}
+#
+# Directory where grafana can store logs
+#
+logs = {{ grafana_log_path }}
+#
+# Directory where grafana will automatically scan and look for plugins
+#
+plugins = {{ grafana_plugins_path }}
+
+#################################### Server ##############################
+[server]
+# Protocol (http or https)
+protocol = http
+
+# The ip address to bind to, empty will bind to all interfaces
+http_addr =
+
+# The http port  to use
+http_port = {{ grafana_port }}
+
+#################################### Database ############################
+[database]
+# You can configure the database connection by specifying type, host, name, user and password
+# as separate properties or as on string using the url property.
+
+# Either "mysql", "postgres" or "sqlite3", it's your choice
+type = {{ grafana_database.type}}
+host = {{ grafana_database.host }}
+name = {{ grafana_database.name }}
+user = {{ grafana_database.user }}
+# If the password contains # or ; you have to wrap it with trippel quotes. Ex """#password;"""
+password = {{ grafana_database.password }}
+
+# For "sqlite3" only, path relative to data_path setting
+path = {{ grafana_database.path }}
+
+#################################### Security ############################
+[security]
+# default admin user, created on startup
+admin_user = {{ grafana_admin_user }}
+
+# default admin password, can be changed before first start of grafana,  or in profile settings
+admin_password = {{ grafana_admin_password }}
+
+#################################### Basic Auth ##########################
+[auth.basic]
+enabled = true
+
+#################################### Logging #############################
+[log]
+# Either "console", "file", "syslog". Default is console and  file
+# Use space to separate multiple modes, e.g. "console file"
+mode = {{ grafana_log_mode }}
+
+# Either "debug", "info", "warn", "error", "critical", default is "info"
+level = {{ grafana_log_level }}
+
+#################################### Dashboard JSON files ################
+[dashboards.json]
+enabled = false
+path = {{ grafana_dashboards_path }}
+
+#################################### Alerting ############################
+[alerting]
+# Disable alerting engine & UI features
+enabled = true
+# Makes it possible to turn off alert rule execution but alerting UI is visible
+execute_alerts = true

@@ -1,0 +1,24 @@
+#
+# {{ ansible_managed }}
+#
+
+[Unit]
+Description=Prometheus
+Wants=network-online.target
+After=network-online.target
+
+[Service]
+Type=simple
+
+User={{ prometheus_user }}
+Group={{ prometheus_group }}
+
+ExecStart={{ prometheus_subdir }}/prometheus \
+    --config.file={{ prometheus_config_path}}/prometheus.yml \
+    --storage.tsdb.path={{ prometheus_db_path }} \
+    --web.listen-address=:{{ prometheus_port }} \
+    --web.console.templates={{ prometheus_subdir }}/consoles \
+    --web.console.libraries={{ prometheus_subdir }}/console_libraries
+
+[Install]
+WantedBy=multi-user.target

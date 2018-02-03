@@ -1,0 +1,9 @@
+[master]
+halcyon1     ansible_connection=local
+
+[workers]
+halcyon2
+
+[cluster:children]
+master
+workers

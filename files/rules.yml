@@ -1,0 +1,50 @@
+---
+#
+# file: files/rules.yml
+#
+# Prometheus recording rules
+# @see https://prometheus.io/docs/prometheus/latest/configuration/recording_rules
+#
+
+groups:
+  - name: cluster metrics
+    rules:
+    - record: instance:cpu_busy:avg_rate5m
+      expr: 100 - (avg by (instance) (irate(node_cpu{mode="idle"}[5m])) * 100)
+    - record: cluster:cpu_busy:avg_rate5m
+      expr: sum(instance:cpu_busy:avg_rate5m)
+
+    - record: instance:memory_total_available:remain
+      expr: node_memory_MemTotal - node_memory_MemAvailable
+    - record: cluster:memory_total_available:remain
+      expr: sum(instance:memory_total_available:remain)
+
+    - record: instance:memory_total_available:ratio
+      expr: node_memory_MemAvailable / node_memory_MemTotal * 100
+    - record: cluster:memory_total_available:ratio
+      expr: sum(node_memory_MemAvailable) / sum(node_memory_MemTotal) * 100
+
+    - record: instance:network_out:rate5m
+      expr: sum by (instance) (irate(node_network_transmit_bytes[5m]))
+    - record: cluster:network_out:rate5m
+      expr: sum(instance:network_out:rate5m)
+
+    - record: instance:network_in:rate5m
+      expr: sum by (instance) (irate(node_network_receive_bytes[5m]))
+    - record: cluster:network_in:rate5m
+      expr: sum(instance:network_in:rate5m)
+
+    - record: instance:disk_bytes_read:rate5m
+      expr: sum by (instance) (irate(node_disk_bytes_read[5m]))
+    - record: cluster:disk_bytes_read:rate5m
+      expr: sum(instance:disk_bytes_read:rate5m)
+
+    - record: instance:disk_bytes_written:rate5m
+      expr: sum by (instance) (irate(node_disk_bytes_written[5m]))
+    - record: cluster:disk_bytes_written:rate5m
+      expr: sum(instance:disk_bytes_written:rate5m)
+
+    - record: instance:disk_io_time:rate5m
+      expr: sum by (instance) (irate(node_disk_io_time_ms[5m]))
+    - record: cluster:disk_io_time:rate5m
+      expr: sum(instance:disk_io_time:rate5m)

@@ -1,0 +1,28 @@
+---
+#
+# file: tests/monitoring_start.yml
+#
+
+- hosts: master:workers
+  become: True
+  tasks:
+  - name: run daemon-reload
+    command: systemctl daemon-reload
+
+- hosts: all
+  become: True
+  tasks:
+  - name: start node_exporter
+    systemd: name=node_exporter state=started
+
+- hosts: master
+  become: True
+  tasks:
+  - name: start Prometheus server
+    systemd: name=prometheus state=started
+
+- hosts: master
+  become: True
+  tasks:
+  - name: start Grafana server
+    systemd: name=grafana-server state=started

@@ -1,0 +1,21 @@
+#
+# {{ ansible_managed }}
+#
+
+global:
+  scrape_interval: 15s
+  evaluation_interval: 15s
+  # scrape_timeout is set to the global default (10s).
+
+  external_labels:
+    monitor: "master"
+
+# A list of scrape configurations.
+scrape_configs:
+  - job_name: "node_exporter"
+    scrape_interval: 5s
+    static_configs:
+      - targets: ["{{ groups["cluster"] | join(':9100", "')}}:9100"]
+
+rule_files:
+  - "{{ prometheus_rule_path }}/*"
