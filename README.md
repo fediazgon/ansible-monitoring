@@ -1,4 +1,9 @@
-<h1 align="center">ansible-monitoring</h1>
+<h1 align="center">
+  <div style="margin:10px;">
+    <img src="https://github.com/fdiazgon/fdiazgon.github.io/blob/master/art/ansible-monitoring-logo.png?raw=true" alt="ansible-monitoring" width="200px">
+  </div>
+  ansible-monitoring
+</h1>
 
 <h4 align="center">Ansible role for installing <a href="https://grafana.com">Grafana</a>, <a href="https://prometheus.io">Prometheus</a> and <a href="https://github.com/prometheus/node_exporter">node_exporter</a>
 </h4>
