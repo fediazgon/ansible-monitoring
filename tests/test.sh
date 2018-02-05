@@ -53,8 +53,5 @@ docker exec $container_id curl http://localhost:8787 | grep "login" \
 echo "Running stop playbook"
 docker exec $container_id ansible-playbook $playbooks_path/monitoring_stop.yml
 
-echo "Checking process stopped"
-docker exec $container_id curl http://localhost:9100/metrics > /dev/null
-
 echo "Removing Docker container"
 docker rm -f $container_id
