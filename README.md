@@ -9,6 +9,13 @@
 </h4>
 
 <p align="center">
+  <a href="https://travis-ci.org/fdiazgon/ansible-monitoring">
+    <img src="https://travis-ci.org/fdiazgon/ansible-monitoring.svg?branch=master" alt="TravisCI">
+  </a>
+  
+</p>
+
+<p align="center">
   <a href="#supported-architectures">Supported architectures</a> •
   <a href="#variables">Variables</a> •
   <a href="#usage">Usage</a> •

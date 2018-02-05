@@ -14,7 +14,7 @@ prometheus_port: 9090
 prometheus_version: 2.1.0
 prometheus_node_exporter_version: 0.15.2
 
-prometheus_platform_suffix: linux-armv7
+prometheus_platform_suffix: linux-amd64
 
 prometheus_install_path: /opt/prometheus
 prometheus_config_path: /etc/prometheus
@@ -46,8 +46,12 @@ v{{ prometheus_node_exporter_version }}/node_exporter-{{ prometheus_node_exporte
 ################ GRAFANA ################
 #########################################
 
-grafana_apt_key: https://bintray.com/user/downloadSubjectPublicKey?username=bintray
-grafana_apt_repo: deb https://dl.bintray.com/fg2it/deb jessie main
+grafana_apt_key: https://packagecloud.io/gpg.key
+grafana_apt_repo: deb https://packagecloud.io/grafana/stable/debian/ jessie main
+
+# Use these one instead if you want to install it on Raspberry Pi 3 
+#grafana_apt_key: https://bintray.com/user/downloadSubjectPublicKey?username=bintray
+#grafana_apt_repo: deb https://dl.bintray.com/fg2it/deb jessie main
 
 grafana_host: "{{ ansible_nodename }}"
 grafana_port: 8787

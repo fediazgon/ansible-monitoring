@@ -3,25 +3,25 @@
 # file: tasks/install-grafana.yml
 #
 
+- name: install Grafana dependencies
+  apt:
+    name: apt-transport-https
+    state: present
+
 - name: ensure Grafana apt key is present
   apt_key:
     url: "{{ grafana_apt_key }}"
     state: present
-  become: yes
 
 - name: ensure Grafana apt repository is present
   apt_repository:
     repo: "{{ grafana_apt_repo }}"
-    update_cache: yes
     state: present
-  become: yes
 
 - name: ensure Grafana is installed
   apt:
     name: grafana
     state: present
-  become: yes
-  tags: apt
 
 - name: copy Grafana main config file
   template:

@@ -1,0 +1,15 @@
+---
+sudo: required
+
+env:
+  - distro: debian9
+
+services:
+  - docker
+
+script:
+  - chmod +x ${PWD}/tests/test.sh
+  - ${PWD}/tests/test.sh
+
+notifications:
+  webhooks: https://galaxy.ansible.com/api/v1/notifications/
