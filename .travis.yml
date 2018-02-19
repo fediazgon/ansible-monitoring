@@ -9,7 +9,7 @@ services:
 
 script:
   - chmod +x ${PWD}/tests/runtests.sh
-  - ${PWD}/tests/test.sh
+  - ${PWD}/tests/runtests.sh
 
 notifications:
   webhooks: https://galaxy.ansible.com/api/v1/notifications/
