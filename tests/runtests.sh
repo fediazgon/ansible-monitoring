@@ -6,6 +6,9 @@ distro=${distro:-"debian9"}
 if [ "$distro" == "debian9" ]; then
   init="/lib/systemd/systemd"
   opts="--privileged --volume=/sys/fs/cgroup:/sys/fs/cgroup:ro"
+elif [ "$distro" == "ubuntu16" ]; then
+  init="/lib/systemd/systemd"
+  opts="--privileged --volume=/sys/fs/cgroup:/sys/fs/cgroup:ro"
 else
   echo "Distro $distro not supported"
   exit 1
