@@ -12,24 +12,34 @@
   <a href="https://travis-ci.org/fdiazgon/ansible-monitoring">
     <img src="https://travis-ci.org/fdiazgon/ansible-monitoring.svg?branch=master" alt="TravisCI">
   </a>
-  
+
 </p>
 
 <p align="center">
-  <a href="#supported-architectures">Supported architectures</a> •
+  <a href="#tests">Tests</a> •
   <a href="#variables">Variables</a> •
   <a href="#usage">Usage</a> •
-  <a href="#improvements-needed">Improvements needed</a> •
+  <a href="#use-it-on-raspberry-pi">Use it on Raspberry Pi</a> •
   <a href="#credits">Credits</a>
 </p>
 
 ![screenshot](https://github.com/fdiazgon/fdiazgon.github.io/blob/master/art/ansible-monitoring.gif?raw=true)
 
-## Supported architectures
+## Tests
 
-The scripts have been tested using a 2 node Raspberry Pi 3 cluster (armv7). However, it should be possible to use them with other architectures with a few changes in `defaults/main.yml`.
+The role was tested in the following distributions using [docker images](https://github.com/fdiazgon/docker-ansible).
 
-First, update the variable `prometheus_platform_suffix` to match yours (e.g., linux-amd64). Then, update the variables `grafana_apt_key` and `grafana_apt_repo` since I had to use an unofficial distribution to install the latest version. You can find the official repos and keys at [Installing Grafana](http://docs.grafana.org/installation/).
+| Distribution               | Tested             |
+| -------------------------- |:------------------:|
+| Debian 9 Stretch           | :white_check_mark: |
+| Ubuntu 16.04 Xenial Xerus  | :white_check_mark: |
+
+You can run the tests from the root directory using the following command.
+
+```shell
+distro=<distro> tests/runtests.sh
+# <distro> is one of { debian9, ubuntu16 } (debian9 is the default one)
+```
 
 ## Variables
 
@@ -95,13 +105,22 @@ ansible-playbook monitoring_start.yml
 
 You should be able to access Grafana and Prometheus using the browser. The installation includes two Grafana dashboards to check the status of the cluster and the individual nodes.
 
-## Improvements needed
+## Use it on Raspberry Pi
 
-Fell free to create a merge request if you have a good solution for the following problems:
+I've successfully used this role in a Raspberry Pi 3 cluster with a few changes in `defaults/main.yml`.
 
-* Remove the need of creating the `cluster` group in the inventory. This group is accessed in `templates/prometheus.yml.j2` to add the IPs in the scrape configuration.
+First, update the variable `prometheus_platform_suffix` to `armv7`. Then, update the variables `grafana_apt_key` and `grafana_apt_repo` since you need to use an unofficial repository to install the latest Grafana version. You can find the official repos and keys at [Installing Grafana](http://docs.grafana.org/installation/).
 
-* Dynamically change the configuration to allow multiple architectures and distributions.
+Just add the following modification to `defaults/main.yml`.
+
+```yml
+#grafana_apt_key: https://packagecloud.io/gpg.key
+#grafana_apt_repo: deb https://packagecloud.io/grafana/stable/debian/ jessie main
+
+# Use these one instead if you want to install it on Raspberry Pi 3
+grafana_apt_key: https://bintray.com/user/downloadSubjectPublicKey?username=bintray
+grafana_apt_repo: deb https://dl.bintray.com/fg2it/deb jessie main
+```
 
 ## Credits
 
