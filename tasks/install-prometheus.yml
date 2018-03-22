@@ -27,12 +27,12 @@
 
 - name: copy Prometheus main config file
   template:
-    src: "prometheus.yml.j2"
+    src: "{{ prometheus_config }}"
     dest: "{{ prometheus_config_path }}/prometheus.yml"
 
 - name: copy Prometheus rules file
   copy:
-    src: "rules.yml"
+    src: "{{ prometheus_rule }}"
     dest: "{{ prometheus_rule_path }}/"
 
 - name: copy Prometheus systemd config to server
