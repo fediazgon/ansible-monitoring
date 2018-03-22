@@ -17,9 +17,11 @@ prometheus_node_exporter_version: 0.15.2
 prometheus_platform_suffix: linux-amd64
 
 prometheus_install_path: /opt/prometheus
+prometheus_config: prometheus.yml.j2
 prometheus_config_path: /etc/prometheus
 prometheus_db_path: /var/lib/prometheus
 
+prometheus_rule: rules.yml
 prometheus_rule_path: "{{ prometheus_config_path }}/rules"
 
 #

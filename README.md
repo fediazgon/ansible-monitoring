@@ -46,6 +46,8 @@ distro=<distro> tests/runtests.sh
 | Variable    | Default  | Description  |
 |-------------|----------| -------------|
 | components  | []       | Services to install. Possible values: { prometheus, node_exporter, grafana }  |
+| prometheus_config | prometheus.yml.j2 | Prometheus config file template filename |
+| prometheus_rule | rule.yml | Prometheus rules filename |
 
 ## Usage
 
