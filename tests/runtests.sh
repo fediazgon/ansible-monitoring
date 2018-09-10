@@ -1,19 +1,16 @@
-role_path="/etc/ansible/roles/monitoring"
-playbooks_path=$role_path/tests
-
 distro=${distro:-"debian9"}
+supported_distros=("debian9" "ubuntu16" "ubuntu18")
 
-if [ "$distro" == "debian9" ]; then
-  init="/lib/systemd/systemd"
-  opts="--privileged --volume=/sys/fs/cgroup:/sys/fs/cgroup:ro"
-elif [ "$distro" == "ubuntu16" ]; then
-  init="/lib/systemd/systemd"
-  opts="--privileged --volume=/sys/fs/cgroup:/sys/fs/cgroup:ro"
-else
-  echo "Distro $distro not supported"
-  exit 1
+if [[ ! "${supported_distros[@]}" =~ "${distro}" ]]; then
+    echo "Distro $distro not supported"
+    echo "Supported distros: ${supported_distros[@]}"
+    exit 1
 fi
 
+role_path="/etc/ansible/roles/monitoring"
+playbooks_path=$role_path/tests
+init="/lib/systemd/systemd"
+opts="--privileged --volume=/sys/fs/cgroup:/sys/fs/cgroup:ro"
 container_id=$(date +%s)
 
 echo "Starting Docker container: ${distro}-ansible"

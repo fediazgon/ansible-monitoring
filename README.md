@@ -20,7 +20,8 @@
   <a href="#variables">Variables</a> •
   <a href="#usage">Usage</a> •
   <a href="#use-it-on-raspberry-pi">Use it on Raspberry Pi</a> •
-  <a href="#credits">Credits</a>
+  <a href="#credits">Credits</a> •
+  <a href="#license">License</a>
 </p>
 
 ![screenshot](https://github.com/fdiazgon/fdiazgon.github.io/blob/master/art/ansible-monitoring.gif?raw=true)
@@ -29,10 +30,11 @@
 
 The role was tested in the following distributions using [docker images](https://github.com/fdiazgon/docker-ansible).
 
-| Distribution               | Tested             |
-| -------------------------- |:------------------:|
-| Debian 9 Stretch           | :white_check_mark: |
-| Ubuntu 16.04 Xenial Xerus  | :white_check_mark: |
+| Distribution                | Tested             |
+| --------------------------- |:------------------:|
+| Debian 9 Stretch            | :white_check_mark: |
+| Ubuntu 16.04 Xenial Xerus   | :white_check_mark: |
+| Ubuntu 18.04 Bionic Beaver  | :white_check_mark: |
 
 You can run the tests from the root directory using the following command.
 
@@ -129,3 +131,7 @@ I've been inspired by the following open source projects:
 * [William-Yeh/ansible-prometheus](https://github.com/William-Yeh/ansible-prometheus)
 * [ansiblebit/grafana](https://github.com/ansiblebit/grafana)
 * [idealista/grafana-role](https://github.com/idealista/grafana-role)
+
+## License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE.md) file for details.
