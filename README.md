@@ -9,8 +9,8 @@
 </h4>
 
 <p align="center">
-  <a href="https://travis-ci.org/fdiazgon/ansible-monitoring">
-    <img src="https://travis-ci.org/fdiazgon/ansible-monitoring.svg?branch=master" alt="TravisCI">
+  <a href="https://travis-ci.org/fediazgon/ansible-monitoring">
+    <img src="https://travis-ci.org/fediazgon/ansible-monitoring.svg?branch=master" alt="TravisCI">
   </a>
 
 </p>
