@@ -1,6 +1,6 @@
 <h1 align="center">
   <div style="margin:10px;">
-    <img src="https://github.com/fdiazgon/fdiazgon.github.io/blob/master/art/ansible-monitoring-logo.png?raw=true" alt="ansible-monitoring" width="200px">
+    <img src="https://github.com/fediazgon/ansible-monitoring/blob/assets/logo.png?raw=true" alt="ansible-monitoring" width="200px">
   </div>
   ansible-monitoring
 </h1>
@@ -24,7 +24,7 @@
   <a href="#license">License</a>
 </p>
 
-![screenshot](https://github.com/fdiazgon/fdiazgon.github.io/blob/master/art/ansible-monitoring.gif?raw=true)
+![screenshot](https://github.com/fediazgon/ansible-monitoring/blob/assets/demo.gif?raw=true)
 
 ## Tests
 
